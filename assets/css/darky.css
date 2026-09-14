@@ -1,0 +1,218 @@
+/* LP Motivační dárky – „sesterská stránka“ brandu pošliRADOST.
+   Navy + zlatá + taupe z produktových fotek, patkové nadpisy jako v logu. Bez externích fontů. */
+:root {
+  --navy: #0f3652;
+  --navy-dark: #0a2538;
+  --taupe: #b49d8b;          /* pozadí z hero fotky – text i tlačítko v navy (kontrast 4,9:1) */
+  --tint: #f3efeb;
+  --gold: #b8913f;           /* dekor: linky, rámečky */
+  --gold-text: #7d5f1d;      /* zlatá pro text na bílé (kontrast ≥ 5:1) */
+  --text: #1d2830;
+  --muted: #4f5d68;
+  --line: #e4ded8;
+  --serif: "Palatino Linotype", Palatino, "Book Antiqua", "Iowan Old Style", "Noto Serif", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; height: auto; display: block; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: #fff;
+}
+
+a { color: var(--navy); text-underline-offset: .18em; }
+a:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; border-radius: 2px; }
+
+.container { max-width: 46rem; margin: 0 auto; padding: 0 1.25rem; }
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: .95rem;
+  text-decoration: none;
+}
+.back:hover { text-decoration: underline; }
+
+/* ---------- Hero: fotka a text na stejném taupe pozadí ---------- */
+.hero { background: var(--taupe); color: var(--navy); display: grid; }
+.hero-text { padding: .5rem 1.25rem 2.25rem; }
+.topbar { margin-bottom: 1rem; }
+.logo { width: 8.5rem; margin-bottom: 1.4rem; }
+
+h1 {
+  margin: 0 0 1rem;
+  max-width: 14em;
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 9vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.01em;
+}
+.lead { margin: 0 0 1.75rem; max-width: 34rem; font-size: 1.1rem; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: .8rem 1.5rem;
+  border-radius: 2px;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color .15s ease;
+}
+.btn:hover { background: var(--navy-dark); }
+
+.hero-photo img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 80% 50%;
+}
+
+@media (min-width: 60rem) {
+  .hero { grid-template-columns: 1fr 1fr; align-items: center; }
+  .hero-text { justify-self: end; max-width: 36rem; padding: 1rem 3rem 3.5rem 1.5rem; }
+  .hero-photo { align-self: stretch; }
+  .hero-photo img { height: 100%; aspect-ratio: auto; min-height: 34rem; object-position: 70% 50%; }
+}
+
+/* ---------- Obsah ---------- */
+.block { padding: clamp(2.5rem, 8vw, 4rem) 0; }
+.block + .block { border-top: 1px solid var(--line); }
+
+h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--navy); }
+h2 { margin: 0 0 1rem; font-size: clamp(1.75rem, 6.5vw, 2.35rem); line-height: 1.15; }
+h3 { margin: 0 0 .4rem; font-size: 1.5rem; line-height: 1.2; }
+h4 { margin: .75rem 0 0; font-size: 1.05rem; font-weight: 600; color: var(--navy); }
+p { margin: 0 0 1rem; max-width: 40rem; }
+p:last-child { margin-bottom: 0; }
+
+.benefits {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem 1.75rem;
+}
+.benefits li { padding-top: .7rem; border-top: 1px solid var(--gold); color: var(--muted); }
+.benefits strong { display: block; color: var(--navy); }
+
+/* Funnel – skutečná sekvence tří kroků */
+.funnel {
+  list-style: none;
+  counter-reset: krok;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 3.25rem;
+}
+.funnel > li { counter-increment: krok; }
+.funnel > li::before {
+  content: counter(krok);
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: .75rem;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--gold-text);
+}
+
+/* Na mobilu se ukázky listují do strany, na širší obrazovce ve třech sloupcích */
+.products {
+  list-style: none;
+  margin: 1.25rem -1.25rem 0 0;
+  padding: 0 1.25rem .5rem 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 74%;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+.products li { scroll-snap-align: start; }
+.products img { border: 1px solid var(--line); }
+.products .price { margin: .1rem 0 .3rem; font-weight: 600; color: var(--gold-text); }
+.products p:last-child { font-size: .95rem; color: var(--muted); }
+
+.sample {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--gold);
+}
+.deal { color: var(--navy); }
+.small { margin-top: .75rem; font-size: .9rem; color: var(--muted); }
+
+.person { display: flex; gap: 1rem; align-items: flex-start; margin-top: .75rem; }
+.person img { width: 5.5rem; flex: none; }
+.person p { margin: 0; }
+
+@media (min-width: 40rem) {
+  .benefits { grid-template-columns: 1fr 1fr; }
+  .products {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, 1fr);
+    margin-right: 0;
+    padding-right: 0;
+    overflow: visible;
+  }
+  .sample { grid-template-columns: 1fr 1.25fr; align-items: center; padding: 1.5rem; }
+}
+
+/* Reference */
+.refs figure { margin: 0 0 1.75rem; max-width: 38rem; }
+.refs figure:last-child { margin-bottom: 0; }
+.refs blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--navy);
+}
+.refs figcaption { margin-top: .5rem; font-size: .95rem; color: var(--muted); }
+
+/* QR – na konferenci se ukazuje z telefonu, proto odkaz z hero a velký kód */
+.qr-jump { margin: .75rem 0 0; }
+.qr-jump a, .url a { display: inline-flex; align-items: center; min-height: 44px; }
+.qr { background: var(--tint); }
+.qr-box { display: grid; gap: 1.25rem; justify-items: start; }
+.qr-code { width: min(15rem, 100%); height: auto; aspect-ratio: 1; border: 1px solid var(--line); }
+.url { margin: 0; font-family: var(--serif); font-size: 1.7rem; line-height: 1.2; }
+@media (min-width: 40rem) {
+  .qr-box { grid-template-columns: auto 1fr; align-items: center; column-gap: 2rem; }
+}
+
+/* Kontakt + patička */
+.contact-list { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .45rem; }
+.contact-list li { display: grid; grid-template-columns: 5.5rem 1fr; column-gap: .5rem; }
+.contact-list li > span:first-child { color: var(--muted); }
+
+.site-footer { background: var(--navy); color: #d3dce3; padding: .75rem 0 2rem; font-size: .9rem; }
+.site-footer .back { color: #fff; font-size: 1rem; }
+.site-footer a:focus-visible { outline-color: #fff; }
+.site-footer p { margin: .5rem 0 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .products { scroll-snap-type: none; }
+}

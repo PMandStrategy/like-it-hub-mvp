@@ -1,0 +1,291 @@
+/* Mira Vlach – společný styl tří LP služeb (brand dle mv-luckyshot2).
+   Fonty self-hosted: Hanken Grotesk (text), Barlow Condensed Italic (akcenty). */
+
+@font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../fonts/hanken-grotesk-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../fonts/hanken-grotesk-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../fonts/hanken-grotesk-latin-ext-700-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../fonts/hanken-grotesk-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Barlow Condensed"; font-style: italic; font-weight: 700; font-display: swap;
+  src: url("../fonts/barlow-condensed-latin-ext-700-italic.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Barlow Condensed"; font-style: italic; font-weight: 700; font-display: swap;
+  src: url("../fonts/barlow-condensed-latin-700-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --dark: #131118;
+  --orange: #f3995e;
+  --orange-hover: #f7b687;
+  --pink: #e62358;
+  --pink-text: #c81a4a;   /* tmavší varianta pro malý text na bílé (kontrast ≥ 5:1) */
+  --navy: #030d57;
+  --gray: #f2f2f3;
+  --text: #15141a;
+  --muted: #4d4c57;
+  --line: #deDDe3;
+  --on-dark: #d6d5dc;
+  --font: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; height: auto; display: block; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: #fff;
+}
+
+.container {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+a { color: var(--navy); text-underline-offset: .18em; }
+a:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; border-radius: 2px; }
+
+/* ---------- Horní lišta + návrat na rozcestník ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: .5rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: .95rem;
+  text-decoration: none;
+}
+.back:hover { text-decoration: underline; }
+
+/* ---------- Hero (jediný výrazný prvek stránky) ---------- */
+.hero {
+  background: var(--dark);
+  color: #fff;
+  padding-bottom: clamp(2.75rem, 9vw, 4.75rem);
+}
+.hero a:not(.btn) { color: var(--on-dark); }
+.hero a:focus-visible, .site-footer a:focus-visible { outline-color: var(--orange); }
+
+.service {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin: clamp(2rem, 9vw, 4rem) 0 .75rem;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--orange);
+}
+.service img { width: 2.1rem; }
+
+h1 {
+  margin: 0 0 1.1rem;
+  font-size: clamp(2.05rem, 8.4vw, 3.35rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.018em;
+  max-width: 17em;
+}
+h1 em { font-style: normal; color: var(--orange); }
+
+.lead {
+  margin: 0 0 1.9rem;
+  max-width: 36rem;
+  font-size: 1.125rem;
+  color: var(--on-dark);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: .8rem 1.5rem;
+  border-radius: 3px;
+  background: var(--orange);
+  color: var(--dark);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color .15s ease;
+}
+.btn:hover { background: var(--orange-hover); }
+.btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.contact .btn:focus-visible { outline-color: var(--navy); }
+
+.cta-note {
+  margin: .9rem 0 0;
+  max-width: 31rem;
+  font-size: .95rem;
+  color: #b4b3bc;
+}
+
+/* ---------- Obsahové bloky ---------- */
+.block { padding: clamp(2.25rem, 8vw, 3.75rem) 0; }
+.block + .block { border-top: 1px solid var(--line); }
+
+h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.5rem, 5.6vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.012em;
+}
+h3 { margin: 0 0 .3rem; font-size: 1.125rem; line-height: 1.3; }
+p { margin: 0 0 1rem; max-width: 40rem; }
+p:last-child { margin-bottom: 0; }
+.muted { color: var(--muted); }
+
+/* Typické situace klientů – citace jejich vlastními slovy */
+.situations {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+.situations q {
+  display: block;
+  font-weight: 700;
+  font-size: 1.125rem;
+  quotes: "„" "“";
+}
+.situations q::before { color: var(--pink-text); }
+.situations p { margin: .2rem 0 0; color: var(--muted); }
+
+/* Přínosy – malý čtvercový bod odkazuje na sloupce brand marku */
+.gains {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+.gains li { position: relative; padding-left: 1.35rem; }
+.gains li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .6em;
+  width: .5rem;
+  height: .5rem;
+  background: var(--orange);
+}
+.gains strong { display: block; }
+.gains span { color: var(--muted); }
+
+/* Postup – skutečná sekvence, proto číslovaný */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.6rem;
+}
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  column-gap: .8rem;
+}
+.steps li::before {
+  content: counter(step);
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: .9;
+  color: var(--pink);
+}
+.steps p { margin: 0; color: var(--muted); }
+
+.facts { margin: 1.5rem 0 0; display: grid; gap: 1rem; }
+.facts div { display: grid; gap: .1rem; }
+.facts dt { font-weight: 700; }
+.facts dd { margin: 0; color: var(--muted); }
+
+.tags {
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+.tags li {
+  padding: .2rem .65rem;
+  border: 1px solid var(--line);
+  border-radius: 2rem;
+  font-size: .92rem;
+}
+
+.aside {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  background: var(--gray);
+  font-size: .98rem;
+}
+
+/* ---------- Závěrečné CTA + kontakt ---------- */
+.contact { background: var(--gray); }
+.contact h2 { max-width: 22em; }
+.contact-list {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: .45rem;
+}
+.contact-list li { display: grid; grid-template-columns: 5.5rem 1fr; column-gap: .5rem; }
+.contact-list li > span:first-child { color: var(--muted); }
+.secondary { margin-top: 1rem; }
+
+/* Chybějící údaje – zřetelně, aby šly najít a doplnit */
+.todo {
+  padding: 0 .3em;
+  background: #fff0a0;
+  color: #3b3100;
+  font-weight: 700;
+  font-size: .92em;
+}
+
+.site-footer {
+  background: var(--dark);
+  color: #b4b3bc;
+  padding: .75rem 0 2rem;
+  font-size: .9rem;
+}
+.site-footer .back { color: #fff; font-size: 1rem; }
+.site-footer .logo { width: min(19rem, 100%); margin: 1.25rem 0 .75rem; }
+.site-footer p { margin: .5rem 0 0; }
+
+@media (min-width: 48rem) {
+  .facts { grid-template-columns: repeat(2, 1fr); column-gap: 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}

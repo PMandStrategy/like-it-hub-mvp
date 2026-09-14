@@ -1,0 +1,123 @@
+/* Rozcestník – neutrální, bez brandu. Systémové písmo, žádné externí zdroje. */
+:root {
+  --bg: #f1f2f4;
+  --surface: #ffffff;
+  --text: #16181d;
+  --muted: #555b66;
+  --line: #d9dce1;
+  --line-strong: #9aa0a9;
+  --focus: #1a5fd6;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111214;
+    --surface: #1c1d21;
+    --text: #eceef1;
+    --muted: #a6abb4;
+    --line: #2e3036;
+    --line-strong: #5b5f68;
+    --focus: #7fb0ff;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.wrap {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 6vw, 3.5rem) 1rem 2rem;
+}
+
+header { margin-bottom: 1.75rem; }
+
+h1 {
+  margin: 0 0 .4rem;
+  font-size: clamp(1.9rem, 8vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  font-weight: 700;
+}
+
+.lead {
+  margin: 0;
+  color: var(--muted);
+  max-width: 30rem;
+}
+
+section + section { margin-top: 1.75rem; }
+
+h2 {
+  margin: 0 0 .6rem;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .5rem;
+}
+
+.card {
+  display: block;
+  min-height: 4.5rem;
+  padding: .9rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card:hover { border-color: var(--line-strong); }
+
+.card:active { transform: scale(.99); }
+
+.card:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.card strong {
+  display: block;
+  font-size: 1.08rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.card span {
+  display: block;
+  margin-top: .2rem;
+  font-size: .94rem;
+  color: var(--muted);
+}
+
+/* Tip od partnera je vizuálně oddělený jen tečkovaným okrajem – bez brandu. */
+.card--tip { border-style: dashed; }
+
+footer {
+  margin-top: 2rem;
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:active { transform: none; }
+}
