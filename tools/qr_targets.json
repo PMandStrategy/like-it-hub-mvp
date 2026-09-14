@@ -1,0 +1,32 @@
+[
+  {
+    "out": "assets/qr/motivacnidarky.svg",
+    "url": "https://www.motivacnidarky.cz/?utm_source=doporucovaci-hub&utm_medium=qr&utm_campaign=doporuceni",
+    "dark": "#0F3652",
+    "title": "QR kód: motivacnidarky.cz"
+  },
+  {
+    "out": "assets/qr/kvartalni-planovani.svg",
+    "url": "https://pmandstrategy.github.io/like-it-hub-mvp/lp/kvartalni-planovani.html",
+    "dark": "#131118",
+    "title": "QR kód: Strategické kvartální plánování (tato stránka)"
+  },
+  {
+    "out": "assets/qr/strategicky-bootcamp.svg",
+    "url": "https://strategickybootcamp.cz/?utm_source=doporucovaci-hub&utm_medium=qr&utm_campaign=strategicky-bootcamp",
+    "dark": "#1A1A1A",
+    "title": "QR kód: strategickybootcamp.cz"
+  },
+  {
+    "out": "assets/qr/strategicke-analyzy.svg",
+    "url": "https://strategickybootcamp.cz/thinktank?utm_source=doporucovaci-hub&utm_medium=qr&utm_campaign=strategicke-analyzy",
+    "dark": "#123F60",
+    "title": "QR kód: strategickybootcamp.cz/thinktank"
+  },
+  {
+    "out": "assets/qr/skoleni-projektoveho-rizeni.svg",
+    "url": "https://www.skolenipm.cz/?utm_source=doporucovaci-hub&utm_medium=qr&utm_campaign=skoleni-pm",
+    "dark": "#111111",
+    "title": "QR kód: skolenipm.cz"
+  }
+]

@@ -1,0 +1,67 @@
+/* QR kód přes celou obrazovku – bez JavaScriptu.
+   Odkaz na #qr zobrazí vrstvu (:target), odkaz na #zavrit ji skryje bez posunu stránky.
+   Sdílené pro všechny LP; neutrální černobílé, aby šel kód spolehlivě naskenovat. */
+
+.qr-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 48px;
+  padding: .6rem 1.05rem;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font: 600 1rem/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .28);
+}
+.qr-fab svg { width: 1.25rem; height: 1.25rem; }
+.qr-fab:focus-visible { outline: 3px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 6px #111; }
+
+.qr-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #fff;
+  color: #111;
+  text-align: center;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .15s ease, visibility 0s linear .15s;
+}
+.qr-overlay:target { visibility: visible; opacity: 1; transition: opacity .15s ease; }
+.qr-overlay img { width: min(82vw, 60vh, 26rem); height: auto; }
+.qr-hint { margin: 0; font-size: 1.2rem; font-weight: 600; line-height: 1.3; }
+.qr-url { margin: 0; font-size: 1.05rem; line-height: 1.3; overflow-wrap: anywhere; }
+.qr-url a { display: inline-flex; align-items: center; min-height: 44px; color: #111; }
+.qr-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: .6rem 1.6rem;
+  border: 2px solid #111;
+  border-radius: 999px;
+  color: #111;
+  font-weight: 600;
+  text-decoration: none;
+}
+.qr-overlay a:focus-visible { outline: 3px solid #1a5fd6; outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .qr-overlay, .qr-overlay:target { transition: none; }
+}
+@media print {
+  .qr-fab { display: none; }
+}

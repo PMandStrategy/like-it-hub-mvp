@@ -62,19 +62,35 @@ V HTML je nastavená adresa `https://pmandstrategy.github.io/like-it-hub-mvp/`. 
 repozitáře ji nahraďte ve všech HTML souborech. Náhled ověříte v
 [LinkedIn Post Inspectoru](https://www.linkedin.com/post-inspector/).
 
-## QR kód (LP Motivační dárky)
+## QR kódy
 
-QR vede na `https://www.motivacnidarky.cz/?utm_source=doporucovaci-hub&utm_medium=qr&utm_campaign=doporuceni`.
-Klikací odkazy na stejné stránce mají `utm_medium=lp`, takže Lenka v analytice rozliší skeny od kliknutí.
+Každá LP je jen stručná ilustrační verze. Na konferenci ji ukážete z mobilu a protějšek si přes QR
+otevře plnou cílovou stránku. Tlačítko **QR** vpravo dole (nebo odkaz „Ukázat QR kód“) zobrazí kód
+přes celou obrazovku, „Zavřít“ ho skryje. Funguje bez JavaScriptu (`assets/css/qr.css`, `:target`).
 
-Přegenerování s jiným cílem:
+| LP | QR i hlavní tlačítko vedou na |
+|---|---|
+| Motivační dárky | motivacnidarky.cz |
+| Strategické kvartální plánování | QR: tato stránka (vlastní web zatím není), tlačítko: LinkedIn |
+| Strategický bootcamp | strategickybootcamp.cz |
+| Strategické analýzy | strategickybootcamp.cz/thinktank |
+| Školení projektových manažerů | skolenipm.cz |
+
+Na LP nejsou žádná `mailto` tlačítka – poptávky vždy řeší cílová stránka nebo LinkedIn.
+
+Externí cíle mají UTM parametry: QR `utm_medium=qr`, klikací odkazy `utm_medium=lp`,
+`utm_campaign` podle stránky. Měřit je umí jen web, který má analytiku.
+
+Cíle a barvy kódů jsou v `tools/qr_targets.json`. Po změně (např. až bude mít kvartální plánování
+vlastní stránku) přegenerujte všechny kódy:
 
 ```bash
-python tools/generate_qr.py --url "https://www.motivacnidarky.cz/?utm_source=doporucovaci-hub&utm_medium=qr&utm_campaign=doporuceni"
+python tools/generate_qr.py --all
 ```
 
-Skript nepotřebuje žádné balíčky. Hotový kód nezávisle přečte zpět (formátové bity, syndromy
-Reed-Solomon, obsah) a SVG uloží jen tehdy, když výsledek sedí se zadanou URL.
+Skript nepotřebuje žádné balíčky. Každý kód nezávisle přečte zpět (formátové bity, syndromy
+Reed-Solomon, obsah) a SVG uloží jen tehdy, když výsledek sedí se zadanou URL. Při změně cílové
+adresy upravte i odkaz pod kódem v HTML dané LP.
 
 ## Obsah, který stárne (stav ke 14. 9. 2026)
 

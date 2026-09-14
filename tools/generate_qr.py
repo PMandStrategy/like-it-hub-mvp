@@ -1,20 +1,23 @@
 """Generátor QR kódu do statického SVG – jen standardní knihovna Pythonu.
 
 Použití:
-    python tools/generate_qr.py
-    python tools/generate_qr.py --url "https://..." --out assets/qr/motivacnidarky.svg
+    python tools/generate_qr.py --all          # všechny kódy podle tools/qr_targets.json
+    python tools/generate_qr.py --url "https://..." --out assets/qr/nazev.svg --dark "#111111"
 
 Kódování: byte mode (UTF-8), korekce chyb M, verze se volí automaticky (1–40),
 maska podle penalizačních pravidel ISO/IEC 18004. Po vygenerování se QR
 nezávisle přečte zpět (formát, syndromy Reed-Solomon, obsah) a porovná se vstupem.
 """
 import argparse
+import json
 import pathlib
 import sys
 
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+TARGETS = ROOT / "tools" / "qr_targets.json"
 DEFAULT_URL = ("https://www.motivacnidarky.cz/"
                "?utm_source=doporucovaci-hub&utm_medium=qr&utm_campaign=doporuceni")
-DEFAULT_OUT = pathlib.Path(__file__).resolve().parent.parent / "assets" / "qr" / "motivacnidarky.svg"
+DEFAULT_OUT = ROOT / "assets" / "qr" / "motivacnidarky.svg"
 
 # Úroveň korekce: (index do tabulek, formátové bity)
 ECL = {"L": (0, 1), "M": (1, 0), "Q": (2, 3), "H": (3, 2)}
@@ -409,23 +412,36 @@ def verify(matrix, ecl_idx):
     return payload.decode("utf-8"), ver, mask
 
 
+def build(url, out, ecl="M", dark="#0F3652", title=""):
+    qr = QR(url, ecl)
+    decoded, ver, mask = verify(qr.modules, ECL[ecl][0])
+    if decoded != url:
+        sys.exit(f"CHYBA: zpětně přečtený obsah nesedí:\n{decoded!r}")
+    out = pathlib.Path(out)
+    if not out.is_absolute():
+        out = ROOT / out
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(qr.to_svg(dark=dark, title=title), encoding="utf-8")
+    print(f"OK  {out.relative_to(ROOT).as_posix()}  verze {ver}, maska {mask}, "
+          f"{qr.size}x{qr.size} modulů, ověřeno zpětným čtením")
+    print(f"    {url}")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--all", action="store_true", help="vygenerovat všechny kódy podle tools/qr_targets.json")
     ap.add_argument("--url", default=DEFAULT_URL)
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     ap.add_argument("--ecl", default="M", choices=list(ECL))
+    ap.add_argument("--dark", default="#0F3652", help="barva modulů – držte ji tmavou kvůli čitelnosti")
+    ap.add_argument("--title", default="QR kód: motivacnidarky.cz")
     args = ap.parse_args()
 
-    qr = QR(args.url, args.ecl)
-    decoded, ver, mask = verify(qr.modules, ECL[args.ecl][0])
-    if decoded != args.url:
-        sys.exit(f"CHYBA: zpětně přečtený obsah nesedí:\n{decoded!r}")
-    out = pathlib.Path(args.out)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(qr.to_svg(title="QR kód: motivacnidarky.cz"), encoding="utf-8")
-    print(f"OK  verze {ver}, maska {mask}, {qr.size}x{qr.size} modulů, ověřeno zpětným čtením")
-    print(f"    {args.url}")
-    print(f"    -> {out}")
+    if args.all:
+        for target in json.loads(TARGETS.read_text(encoding="utf-8")):
+            build(target["url"], target["out"], args.ecl, target.get("dark", "#111111"), target.get("title", ""))
+    else:
+        build(args.url, args.out, args.ecl, args.dark, args.title)
 
 
 if __name__ == "__main__":
