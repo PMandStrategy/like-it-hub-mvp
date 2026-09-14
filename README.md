@@ -1,27 +1,46 @@
 # Doporučovací hub
 
-Statický web pro ukázku z mobilu: rozcestník a čtyři landing pages. Každá stránka se dá sdílet i samostatně.
+Statický web pro ukázku z mobilu: rozcestník a pět landing pages. Každá stránka se dá sdílet i samostatně.
 Nepoužívá frameworky, cookies, tracking ani externí runtime závislosti.
 
 ```
 /
-├── index.html                      rozcestník
+├── index.html                            rozcestník
 ├── lp/
-│   ├── motivacni-darky.html        partnerská LP pošliRADOST (Lenka Valíčková) + QR
-│   ├── kvartalni-planovani.html
-│   ├── strategicky-bootcamp.html
-│   └── strategicke-analyzy.html
+│   ├── kvartalni-planovani.html          brand Mira Vlach (mv.css)
+│   ├── strategicky-bootcamp.html         brand Strategický bootcamp (sb.css)
+│   ├── strategicke-analyzy.html          Strategický bootcamp – Analytická divize (sb.css, body.analytics)
+│   ├── skoleni-projektoveho-rizeni.html  brand skolenipm.cz (pm.css)
+│   └── motivacni-darky.html              partnerská LP pošliRADOST (darky.css) + QR
 ├── assets/
-│   ├── css/     hub.css (rozcestník), mv.css (3 LP Miry), darky.css (LP pošliRADOST)
-│   ├── fonts/   Hanken Grotesk + Barlow Condensed (self-hosted, woff2)
-│   ├── img/     WebP obrázky, og/ = náhledy pro sdílení (JPEG 1200×630)
+│   ├── css/     hub.css, mv.css, sb.css, pm.css, darky.css
+│   ├── fonts/   Hanken Grotesk, Barlow Condensed, DM Sans, Roboto Condensed (self-hosted woff2)
+│   ├── img/
+│   │   ├── sb/  logo bootcampu, logo Analytické divize (text i štítek), ikony diamantu, fotky
+│   │   ├── pm/  fotky ze školení
+│   │   ├── mv/  logo Mira Vlach
+│   │   ├── darky/
+│   │   └── og/  náhledy pro sdílení (JPEG 1200×630)
 │   └── qr/      motivacnidarky.svg
-├── tools/generate_qr.py            generátor QR (jen standardní knihovna Pythonu)
+├── tools/generate_qr.py                  generátor QR (jen standardní knihovna Pythonu)
 └── .nojekyll
 ```
 
 Všechny odkazy a assety používají relativní cesty, web proto funguje pod libovolnou subcestou
 (`https://<uzivatel>.github.io/<repo>/`).
+
+Živá verze: **https://pmandstrategy.github.io/like-it-hub-mvp/**
+
+## Grafika Analytické divize
+
+Ve složce `assets/img/sb/` jsou varianty podle návrhu loga:
+
+- `logo-analyticka-divize.webp` – modrý diamant + podtitul „ANALYTICKÁ DIVIZE“ (použité v záhlaví LP),
+- `logo-analyticka-divize-stitek.webp` – podtitul v modrém štítku,
+- `diamant.svg`, `diamant-3.svg`, `diamant-5.svg`, `diamant-7.svg` – ikona diamantu bez paprsků a se 3, 5 a 7 paprsky (vektor).
+
+Loga vznikla z originálního loga ze strategickybootcamp.cz (diamant přebarvený na modrou #3DA5DC,
+podtitul písmem DM Sans).
 
 ## Lokální náhled
 
@@ -31,36 +50,17 @@ python -m http.server 8000 --bind 127.0.0.1
 
 Pak otevřete http://127.0.0.1:8000/.
 
-## Nasazení na GitHub Pages
+## Nasazení a aktualizace
 
-1. Vytvořte **veřejný** repozitář, např. `like-it-hub-mvp`.
-2. Nahrajte obsah složky do větve `main`:
-   ```bash
-   git init -b main
-   git add .
-   git commit -m "Doporučovací hub: rozcestník a 4 landing pages"
-   git remote add origin https://github.com/PMandStrategy/like-it-hub-mvp.git
-   git push -u origin main
-   ```
-   Pokud máte `gh` CLI, první krok i push zvládne jeden příkaz (po `git commit`):
-   ```bash
-   gh repo create PMandStrategy/like-it-hub-mvp --public --source . --push
-   ```
-3. Na GitHubu otevřete **Settings → Pages → Build and deployment → Deploy from a branch**,
-   vyberte `main` a `/ (root)` a uložte.
-4. Asi po minutě web poběží na **https://pmandstrategy.github.io/like-it-hub-mvp/**.
+Web běží z větve `main` (Settings → Pages → Deploy from a branch → `main` / `/ (root)`).
+Každý push do `main` se do minuty promítne na živou adresu.
 
 ### Náhledy při sdílení (Open Graph)
 
 `og:image` a `og:url` musí být absolutní URL, jinak LinkedIn ani chatovací aplikace náhled nenačtou.
-V HTML je nastavená adresa `https://pmandstrategy.github.io/like-it-hub-mvp/`. Pokud se repozitář
-nebo účet jmenuje jinak, nahraďte ji ve všech HTML souborech. Příklad pro PowerShell:
-
-```powershell
-Get-ChildItem -Recurse -Filter *.html | ForEach-Object { (Get-Content $_ -Raw -Encoding utf8).Replace('https://pmandstrategy.github.io/like-it-hub-mvp/', 'https://NOVA-ADRESA/') | Set-Content $_ -Encoding utf8 -NoNewline }
-```
-
-Náhled po nasazení ověříte v [LinkedIn Post Inspectoru](https://www.linkedin.com/post-inspector/).
+V HTML je nastavená adresa `https://pmandstrategy.github.io/like-it-hub-mvp/`. Při přejmenování
+repozitáře ji nahraďte ve všech HTML souborech. Náhled ověříte v
+[LinkedIn Post Inspectoru](https://www.linkedin.com/post-inspector/).
 
 ## QR kód (LP Motivační dárky)
 
@@ -74,21 +74,11 @@ python tools/generate_qr.py --url "https://www.motivacnidarky.cz/?utm_source=dop
 ```
 
 Skript nepotřebuje žádné balíčky. Hotový kód nezávisle přečte zpět (formátové bity, syndromy
-Reed-Solomon, obsah) a SVG uloží jen tehdy, když výsledek sedí se zadanou URL. Před tiskem ho
-přesto naskenujte telefonem.
+Reed-Solomon, obsah) a SVG uloží jen tehdy, když výsledek sedí se zadanou URL.
 
-## Obsah, který stárne nebo chybí
+## Obsah, který stárne (stav ke 14. 9. 2026)
 
-- **LP Motivační dárky:** odečet ceny vzorkového balíčku platí pro objednávky **do 30. 9. 2026**
-  (podle motivacnidarky.cz ke 14. 9. 2026). Po tomto datu upravte text v kroku 2.
-- **LP Strategický bootcamp:** termíny běhů jsou aktuální ke 14. 9. 2026.
-- Místa označená `[DOPLNIT …]` (žlutě zvýrazněná) je potřeba doplnit:
-  - telefon na všech třech LP Miry,
-  - délka workshopu a četnost check-inů (kvartální plánování),
-  - rytmus společných setkání (bootcamp).
-
-Seznam všech výskytů vypíše:
-
-```bash
-git grep -n "DOPLNIT"
-```
+- **Motivační dárky:** odečet ceny vzorkového balíčku platí pro objednávky do 30. 9. 2026.
+- **Strategický bootcamp:** termíny běhů 30. 9.–27. 10. a 18. 11.–16. 12. 2026.
+- **Školení:** termín 10.–11. 10. 2026 a počet volných míst (3).
+- **Strategické analýzy:** orientační cena od 10 000 Kč a pilotní fáze služby.
